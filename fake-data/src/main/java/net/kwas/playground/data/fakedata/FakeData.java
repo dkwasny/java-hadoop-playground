@@ -1,6 +1,6 @@
-package net.kwas.sparkplayground.generate;
+package net.kwas.playground.data.fakedata;
 
-public class GeneratedPhrase {
+public class FakeData {
 
     private final String phrase;
     private final int numWords;
@@ -14,7 +14,7 @@ public class GeneratedPhrase {
     private final int maxCharScore;
     private final String phraseMd5;
 
-    public GeneratedPhrase(
+    public FakeData(
         String phrase,
         int numWords,
         int numChars,

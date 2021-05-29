@@ -1,0 +1,13 @@
+plugins {
+    id 'kwas.java-base'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    implementation project(':fake-data')
+
+    implementation 'org.apache.parquet:parquet-hadoop:1.10.1'
+    implementation 'org.apache.hadoop:hadoop-common:3.3.0'
+}
