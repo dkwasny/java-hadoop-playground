@@ -1,0 +1,25 @@
+plugins {
+    id 'kwas.java-base'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    implementation project(':fake-data')
+
+    implementation 'org.apache.arrow:arrow-vector:4.0.1'
+    implementation 'org.apache.arrow:arrow-memory-unsafe:4.0.1'
+
+    // parquet-arrow depends on an _ancient_ version of arrow (0.10.0).
+    // PARQUET-1942 was opened to bump the dependency to 2.0.0, but the creator of the ticket disappeared after creation.
+    // It seems like there isn't a big desire to bump the version.
+    //
+    // Really, it seems like the Java-Arrow usecase really isn't that hot by itself.
+    // https://stackoverflow.com/questions/57974485/converting-arrow-to-parquet-and-vice-versa-in-java
+    // https://stackoverflow.com/questions/45356969/spark-dataframe-to-arrow
+    //
+    // There are vendors like Dremio that seem to have proprietary solutions for integrating Parquet and Arrow.
+    // Dremio in particular seems to compile their own Arrow and Parquet for their projects.
+//    implementation 'org.apache.parquet:parquet-arrow:1.10.1'
+}

@@ -14,7 +14,7 @@ public class FakeDataWriteSupport extends WriteSupport<FakeData> {
 
     @Override
     public WriteSupport.WriteContext init(Configuration configuration) {
-        return new WriteSupport.WriteContext(FakeDataSchema.get(), Collections.emptyMap());
+        return new WriteSupport.WriteContext(FakeDataParquetSchema.get(), Collections.emptyMap());
     }
 
     @Override
@@ -37,6 +37,7 @@ public class FakeDataWriteSupport extends WriteSupport<FakeData> {
         addField("avgCharScore", idx++, () -> consumer.addInteger(record.getAvgCharScore()));
         addField("minCharScore", idx++, () -> consumer.addInteger(record.getMinCharScore()));
         addField("maxCharScore", idx++, () -> consumer.addInteger(record.getMaxCharScore()));
+        addField("classification", idx++, () -> consumer.addBinary(Binary.fromCharSequence(record.getClassification())));
         addField("phraseMd5", idx++, () -> consumer.addBinary(Binary.fromCharSequence(record.getPhraseMd5())));
 
         consumer.endMessage();

@@ -1,0 +1,12 @@
+plugins {
+    id 'kwas.java-base'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    implementation project(':fake-data')
+
+    implementation 'org.apache.commons:commons-csv:1.7'
+}

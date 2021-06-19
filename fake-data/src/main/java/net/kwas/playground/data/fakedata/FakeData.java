@@ -12,6 +12,7 @@ public class FakeData {
     private final int avgCharScore;
     private final int minCharScore;
     private final int maxCharScore;
+    private final String classification;
     private final String phraseMd5;
 
     public FakeData(
@@ -25,6 +26,7 @@ public class FakeData {
         int avgCharScore,
         int minCharScore,
         int maxCharScore,
+        String classification,
         String phraseMd5
     ) {
         this.phrase = phrase;
@@ -37,6 +39,7 @@ public class FakeData {
         this.avgCharScore = avgCharScore;
         this.minCharScore = minCharScore;
         this.maxCharScore = maxCharScore;
+        this.classification = classification;
         this.phraseMd5 = phraseMd5;
     }
 
@@ -78,6 +81,10 @@ public class FakeData {
 
     public int getMaxCharScore() {
         return maxCharScore;
+    }
+
+    public String getClassification() {
+        return classification;
     }
 
     public String getPhraseMd5() {

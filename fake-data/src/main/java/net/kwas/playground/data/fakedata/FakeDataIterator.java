@@ -66,6 +66,7 @@ public class FakeDataIterator implements Iterator<FakeData> {
 
         String phrase = phraseBuilder.toString();
         String phraseMd5 = DigestUtils.md5Hex(phrase);
+        String classification = getClassification(numChars);
         int avgWordScore = totalWordScore / numWords;
         int avgCharScore = totalWordScore / numChars;
         return new FakeData(
@@ -79,8 +80,27 @@ public class FakeDataIterator implements Iterator<FakeData> {
                 avgCharScore,
                 minCharScore,
                 maxCharScore,
+                classification,
                 phraseMd5
         );
+    }
+
+    private String getClassification(int numChars) {
+        if (numChars < 5) {
+            return "babby";
+        }
+        else if (numChars < 10) {
+            return "small";
+        }
+        else if (numChars < 30) {
+            return "normal";
+        }
+        else if (numChars < 50) {
+            return "large";
+        }
+        else {
+            return "chungus";
+        }
     }
 
 }

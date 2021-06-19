@@ -1,2 +1,2 @@
 rootProject.name = 'java-data-playground'
-include 'fake-data', 'parquet'
+include 'fake-data', 'csv', 'parquet', 'spark', 'arrow'
