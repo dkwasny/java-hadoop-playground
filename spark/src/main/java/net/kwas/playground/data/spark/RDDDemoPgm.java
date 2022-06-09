@@ -44,7 +44,8 @@ public class RDDDemoPgm {
         printTotalScoreSumWithDataFrameRDD(rowRdd);
 
         session.read()
-                .parquet(inputFile).printSchema();
+                .parquet(inputFile)
+                .printSchema();
 
         session.close();
         sc.close();
