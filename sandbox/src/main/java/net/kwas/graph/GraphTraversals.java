@@ -14,7 +14,7 @@ public class GraphTraversals {
         return depthFirstTraversalRecursive(node, new HashSet<>());
     }
 
-    public static List<Integer> depthFirstTraversalRecursive(Node node, Set<Integer> seenNodes) {
+    private static List<Integer> depthFirstTraversalRecursive(Node node, Set<Integer> seenNodes) {
         List<Integer> retVal = new ArrayList<>();
         if (!seenNodes.contains(node.getId())) {
             retVal.add(node.getId());
