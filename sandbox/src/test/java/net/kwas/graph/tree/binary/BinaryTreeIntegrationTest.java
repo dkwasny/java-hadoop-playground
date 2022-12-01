@@ -2,6 +2,8 @@ package net.kwas.graph.tree.binary;
 
 import net.kwas.graph.GraphSearches;
 import net.kwas.graph.GraphTraversals;
+import net.kwas.graph.tree.binary.simple.BinaryTreeBalancer;
+import net.kwas.graph.tree.binary.simple.SimpleBinaryTree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,14 +35,14 @@ public class BinaryTreeIntegrationTest {
     @Test
     public void inOrderTraversalRecursive() {
         List<Integer> expected = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
-        List<Integer> actual = BinaryTreeTraversals.inOrderTraversalRecursive(getTree());
+        List<Integer> actual = getTree().inOrderTraversalRecursive();
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void inOrderTraversal() {
         List<Integer> expected = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
-        List<Integer> actual = BinaryTreeTraversals.inOrderTraversal(getTree());
+        List<Integer> actual = getTree().inOrderTraversal();
         Assertions.assertEquals(expected, actual);
     }
 
@@ -67,7 +69,7 @@ public class BinaryTreeIntegrationTest {
 
     @Test
     public void arrayBalance() {
-        BinaryTree tree = BinaryTreeBalancer.arrayBalance(getTree());
+        SimpleBinaryTree tree = BinaryTreeBalancer.arrayBalance(getTree());
         List<Integer> expected = List.of(7, 4, 2, 1, 3, 6, 5, 11, 9, 8, 10, 13, 12);
         List<Integer> actual = GraphTraversals.depthFirstTraversal(tree.getHead());
         Assertions.assertEquals(expected, actual);
@@ -75,15 +77,15 @@ public class BinaryTreeIntegrationTest {
 
     @Test
     public void arrayBalanceRecursive() {
-        BinaryTree tree = BinaryTreeBalancer.arrayBalanceRecursive(getTree());
+        SimpleBinaryTree tree = BinaryTreeBalancer.arrayBalanceRecursive(getTree());
         List<Integer> expected = List.of(7, 4, 2, 1, 3, 6, 5, 11, 9, 8, 10, 13, 12);
         List<Integer> actual = GraphTraversals.depthFirstTraversal(tree.getHead());
         Assertions.assertEquals(expected, actual);
     }
 
-    private BinaryTree getTree() {
-        return new BinaryTree()
-            .addValue(8)
+    private SimpleBinaryTree getTree() {
+        SimpleBinaryTree retVal =  new SimpleBinaryTree();
+        retVal.addValue(8)
             .addValue(4)
             .addValue(11)
             .addValue(3)
@@ -96,6 +98,7 @@ public class BinaryTreeIntegrationTest {
             .addValue(10)
             .addValue(13)
             .addValue(1);
+        return retVal;
     }
 
 }

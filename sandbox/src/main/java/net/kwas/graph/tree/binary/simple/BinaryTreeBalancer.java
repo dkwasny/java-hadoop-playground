@@ -1,4 +1,4 @@
-package net.kwas.graph.tree.binary;
+package net.kwas.graph.tree.binary.simple;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -6,10 +6,10 @@ import java.util.List;
 
 public class BinaryTreeBalancer {
 
-    public static BinaryTree arrayBalance(BinaryTree tree) {
-        List<Integer> inOrder = BinaryTreeTraversals.inOrderTraversal(tree);
+    public static SimpleBinaryTree arrayBalance(SimpleBinaryTree tree) {
+        List<Integer> inOrder = tree.inOrderTraversal();
 
-        BinaryTree retVal = new BinaryTree();
+        SimpleBinaryTree retVal = new SimpleBinaryTree();
         Deque<List<Integer>> listsToProcess = new ArrayDeque<>();
         listsToProcess.add(inOrder);
         while (!listsToProcess.isEmpty()) {
@@ -25,16 +25,16 @@ public class BinaryTreeBalancer {
         return retVal;
     }
 
-    public static BinaryTree arrayBalanceRecursive(BinaryTree tree) {
-        List<Integer> inOrder = BinaryTreeTraversals.inOrderTraversalRecursive(tree);
+    public static SimpleBinaryTree arrayBalanceRecursive(SimpleBinaryTree tree) {
+        List<Integer> inOrder = tree.inOrderTraversalRecursive();
 
-        BinaryTree retVal = new BinaryTree();
+        SimpleBinaryTree retVal = new SimpleBinaryTree();
         arrayBalanceRecursive(retVal, inOrder);
 
         return retVal;
     }
 
-    private static void arrayBalanceRecursive(BinaryTree tree, List<Integer> values) {
+    private static void arrayBalanceRecursive(SimpleBinaryTree tree, List<Integer> values) {
         int centerIdx = values.size() / 2;
 
         if (centerIdx < values.size()) {

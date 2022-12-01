@@ -1,5 +1,6 @@
 package net.kwas.graph.tree.binary;
 
+import net.kwas.graph.tree.binary.simple.SimpleBinaryTree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,77 +10,77 @@ public class BinaryTreeInverterTest {
 
     @Test
     public void invert() {
-        BinaryTree tree = new BinaryTree()
-            .addValue(4)
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValue(4)
             .addValue(2)
             .addValue(5)
             .addValue(1)
             .addValue(3);
 
-        BinaryTreeInverter.invert(tree);
+        tree.invert();
 
         List<Integer> expected = List.of(5, 4, 3, 2, 1);
-        List<Integer> actual = BinaryTreeTraversals.inOrderTraversal(tree);
+        List<Integer> actual = tree.inOrderTraversal();
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void invert_single() {
-        BinaryTree tree = new BinaryTree()
-            .addValue(4);
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValue(4);
 
-        BinaryTreeInverter.invert(tree);
+        tree.invert();
 
         List<Integer> expected = List.of(4);
-        List<Integer> actual = BinaryTreeTraversals.inOrderTraversal(tree);
+        List<Integer> actual = tree.inOrderTraversal();
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void invert_empty() {
-        BinaryTree tree = new BinaryTree();
+        SimpleBinaryTree tree = new SimpleBinaryTree();
 
-        BinaryTreeInverter.invert(tree);
+        tree.invert();
 
-        List<Integer> actual = BinaryTreeTraversals.inOrderTraversal(tree);
+        List<Integer> actual = tree.inOrderTraversal();
         Assertions.assertEquals(0, actual.size());
     }
 
     @Test
     public void invertRecursive() {
-        BinaryTree tree = new BinaryTree()
-            .addValue(4)
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValue(4)
             .addValue(2)
             .addValue(5)
             .addValue(1)
             .addValue(3);
 
-        BinaryTreeInverter.invertRecursive(tree);
+        tree.invertRecursive();
 
         List<Integer> expected = List.of(5, 4, 3, 2, 1);
-        List<Integer> actual = BinaryTreeTraversals.inOrderTraversal(tree);
+        List<Integer> actual = tree.inOrderTraversal();
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void invertRecursive_single() {
-        BinaryTree tree = new BinaryTree()
-            .addValue(4);
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValue(4);
 
-        BinaryTreeInverter.invertRecursive(tree);
+        tree.invertRecursive();
 
         List<Integer> expected = List.of(4);
-        List<Integer> actual = BinaryTreeTraversals.inOrderTraversal(tree);
+        List<Integer> actual = tree.inOrderTraversal();
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
     public void invertRecursive_empty() {
-        BinaryTree tree = new BinaryTree();
+        SimpleBinaryTree tree = new SimpleBinaryTree();
 
-        BinaryTreeInverter.invertRecursive(tree);
+        tree.invertRecursive();
 
-        List<Integer> actual = BinaryTreeTraversals.inOrderTraversal(tree);
+        List<Integer> actual = tree.inOrderTraversal();
         Assertions.assertEquals(0, actual.size());
     }
 

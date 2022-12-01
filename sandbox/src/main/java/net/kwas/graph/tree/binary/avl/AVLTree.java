@@ -1,58 +1,25 @@
 package net.kwas.graph.tree.binary.avl;
 
+import net.kwas.graph.tree.binary.BaseBinaryTree;
+
 import java.util.function.BiFunction;
 
-public class AVLTree {
+public class AVLTree extends BaseBinaryTree<AVLTreeNode> {
 
-    private AVLTreeNode head;
-
-    private int size = 0;
-
-    public AVLTreeNode getHead() {
-        return head;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public boolean contains(int value) {
-        boolean retVal = false;
-        AVLTreeNode currNode = head;
-        while (!retVal && currNode != null) {
-            if (value == currNode.getId()) {
-                retVal = true;
-            }
-            else if (value < currNode.getId()) {
-                currNode = currNode.getLeftChild();
-            }
-            else {
-                currNode = currNode.getRightChild();
-            }
-        }
-        return retVal;
-    }
-
-    public AVLTree addValues(int... values) {
-        for (int value : values) {
-            addValue(value);
-        }
-        return this;
-    }
-
+    @Override
     public AVLTree addValue(int value) {
 
         if (!contains(value)) {
-            if (head == null) {
-                head = new AVLTreeNode(value);
+            if (getHead() == null) {
+                setHead(new AVLTreeNode(value));
             } else {
                 AVLTreeNode newNode = addChild(value);
                 AVLTreeNode newRoot = rebalance(newNode);
                 if (newRoot != null) {
-                    head = newRoot;
+                    setHead(newRoot);
                 }
             }
-            size++;
+            setSize(getSize() + 1);
         }
 
         return this;
@@ -60,7 +27,7 @@ public class AVLTree {
 
     private AVLTreeNode addChild(int value) {
         AVLTreeNode retVal = null;
-        AVLTreeNode currNode = head;
+        AVLTreeNode currNode = getHead();
 
         while (retVal == null) {
             if (value < currNode.getId()) {
@@ -105,11 +72,11 @@ public class AVLTree {
                 }
                 else if (parent.getBalance() > 1) {
                     if (currNode.getBalance() < 0) {
-                        retVal = doRotate(parent, currNode, AVLTree::rotateRightLeft);
+                        retVal = doRotate(parent, currNode, this::rotateRightLeft);
                         break;
                     }
                     else if (currNode.getBalance() > 0) {
-                        retVal = doRotate(parent, currNode, AVLTree::rotateLeft);
+                        retVal = doRotate(parent, currNode, this::rotateLeft);
                         break;
                     }
                     else {
@@ -118,11 +85,11 @@ public class AVLTree {
                 }
                 else if (parent.getBalance() < -1) {
                     if (currNode.getBalance() < 0) {
-                        retVal = doRotate(parent, currNode, AVLTree::rotateRight);
+                        retVal = doRotate(parent, currNode, this::rotateRight);
                         break;
                     }
                     else if (currNode.getBalance() > 0) {
-                        retVal = doRotate(parent, currNode, AVLTree::rotateLeftRight);
+                        retVal = doRotate(parent, currNode, this::rotateLeftRight);
                         break;
                     }
                     else {
@@ -133,7 +100,7 @@ public class AVLTree {
             currNode = parent;
         }
 
-        if (parent != head) {
+        if (parent != getHead()) {
             retVal = null;
         }
 
@@ -161,7 +128,7 @@ public class AVLTree {
         return retVal;
     }
 
-    public static AVLTreeNode rotateLeft(AVLTreeNode x, AVLTreeNode z) {
+    private AVLTreeNode rotateLeft(AVLTreeNode x, AVLTreeNode z) {
         x.setRightChild(z.getLeftChild());
         z.setLeftChild(x);
 
@@ -173,7 +140,7 @@ public class AVLTree {
         return z;
     }
 
-    public static AVLTreeNode rotateRight(AVLTreeNode x, AVLTreeNode z) {
+    private AVLTreeNode rotateRight(AVLTreeNode x, AVLTreeNode z) {
         x.setLeftChild(z.getRightChild());
         z.setRightChild(x);
 
@@ -185,7 +152,7 @@ public class AVLTree {
         return z;
     }
 
-    public static AVLTreeNode rotateLeftRight(AVLTreeNode x, AVLTreeNode z) {
+    private AVLTreeNode rotateLeftRight(AVLTreeNode x, AVLTreeNode z) {
         AVLTreeNode y = z.getRightChild();
 
         y = rotateLeft(z, y);
@@ -198,7 +165,7 @@ public class AVLTree {
         return y;
     }
 
-    public static AVLTreeNode rotateRightLeft(AVLTreeNode x, AVLTreeNode z) {
+    private AVLTreeNode rotateRightLeft(AVLTreeNode x, AVLTreeNode z) {
         AVLTreeNode y = z.getLeftChild();
 
         y = rotateRight(z, y);
