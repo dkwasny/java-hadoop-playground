@@ -1,5 +1,7 @@
 package net.kwas.graph.tree.binary;
 
+import java.util.List;
+
 public interface BinaryTree<T extends BinaryTreeNode<T>> {
 
     T getHead();
@@ -15,5 +17,17 @@ public interface BinaryTree<T extends BinaryTreeNode<T>> {
     BinaryTree<T> addValue(int value);
 
     boolean contains(int value);
+
+    List<Integer> inOrderTraversal();
+
+    List<Integer> inOrderTraversalRecursive();
+
+    void invert();
+
+    void invertRecursive();
+
+    boolean isBalanced();
+
+    int getHeight();
 
 }

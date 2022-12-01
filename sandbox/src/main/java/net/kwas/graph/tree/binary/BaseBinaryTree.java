@@ -56,6 +56,7 @@ public abstract class BaseBinaryTree<T extends BinaryTreeNode<T>> implements Bin
         return retVal;
     }
 
+    @Override
     public List<Integer> inOrderTraversal() {
         List<Integer> retVal = new ArrayList<>(getSize());
 
@@ -79,6 +80,7 @@ public abstract class BaseBinaryTree<T extends BinaryTreeNode<T>> implements Bin
         return retVal;
     }
 
+    @Override
     public List<Integer> inOrderTraversalRecursive() {
         List<Integer> retVal = new ArrayList<>(getSize());
         inOrderTraversalRecursive(getHead(), retVal);
@@ -93,6 +95,7 @@ public abstract class BaseBinaryTree<T extends BinaryTreeNode<T>> implements Bin
         }
     }
 
+    @Override
     public void invert() {
         T head = getHead();
         if (head == null) {
@@ -114,6 +117,7 @@ public abstract class BaseBinaryTree<T extends BinaryTreeNode<T>> implements Bin
         }
     }
 
+    @Override
     public void invertRecursive() {
         invertRecursive(getHead());
     }
@@ -130,6 +134,48 @@ public abstract class BaseBinaryTree<T extends BinaryTreeNode<T>> implements Bin
         T tmp = node.getLeftChild();
         node.setLeftChild(node.getRightChild());
         node.setRightChild(tmp);
+    }
+
+    @Override
+    public boolean isBalanced() {
+        boolean retVal = true;
+        T head = getHead();
+        if (head != null) {
+            int leftHeight = getHeight(getHead().getLeftChild());
+            int rightHeight = getHeight(getHead().getRightChild());
+            int balance = leftHeight - rightHeight;
+            retVal = balance >= -1 && balance <= 1;
+        }
+        return retVal;
+    }
+
+    @Override
+    public int getHeight() {
+        return getHeight(getHead());
+    }
+
+    private int getHeight(T node) {
+        int retVal = 0;
+
+        if (node != null) {
+            Deque<T> nodesToVisit = new ArrayDeque<>();
+            nodesToVisit.push(node);
+            while (!nodesToVisit.isEmpty()) {
+                int levelSize = nodesToVisit.size();
+                for (int i = 0; i < levelSize; i++) {
+                    T currNode = nodesToVisit.pollFirst();
+                    if (currNode.getLeftChild() != null) {
+                        nodesToVisit.addLast(currNode.getLeftChild());
+                    }
+                    if (currNode.getRightChild() != null) {
+                        nodesToVisit.addLast(currNode.getRightChild());
+                    }
+                }
+                retVal++;
+            }
+        }
+
+        return retVal;
     }
 
 }

@@ -57,26 +57,26 @@ public class GraphSearchesTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    private GenericNode getTree() {
-        return new GenericNode(1)
-            .withNeighbor(new GenericNode(2)
-                .withNeighbor(new GenericNode(4))
-                .withNeighbor(new GenericNode(5)
-                    .withNeighbor(new GenericNode(9))
-                    .withNeighbor(new GenericNode(10))
+    private SimpleNode getTree() {
+        return new SimpleNode(1)
+            .withNeighbor(new SimpleNode(2)
+                .withNeighbor(new SimpleNode(4))
+                .withNeighbor(new SimpleNode(5)
+                    .withNeighbor(new SimpleNode(9))
+                    .withNeighbor(new SimpleNode(10))
                 )
             )
-            .withNeighbor(new GenericNode(3))
-            .withNeighbor(new GenericNode(6)
-                .withNeighbor(new GenericNode(7))
-                .withNeighbor(new GenericNode(8))
+            .withNeighbor(new SimpleNode(3))
+            .withNeighbor(new SimpleNode(6)
+                .withNeighbor(new SimpleNode(7))
+                .withNeighbor(new SimpleNode(8))
             );
     }
 
-    private GenericNode getGraph() {
-        Map<Integer, GenericNode> nodes = new HashMap<>();
+    private SimpleNode getGraph() {
+        Map<Integer, SimpleNode> nodes = new HashMap<>();
         for (int i = 1; i <= 8; i++) {
-            nodes.put(i, new GenericNode(i));
+            nodes.put(i, new SimpleNode(i));
         }
 
         setupNeighbors(nodes, 1, 2, 5, 7);
@@ -91,8 +91,8 @@ public class GraphSearchesTest {
         return nodes.get(1);
     }
 
-    private void setupNeighbors(Map<Integer, GenericNode> nodes, int nodeId, int... neighborIds) {
-        GenericNode node = nodes.get(nodeId);
+    private void setupNeighbors(Map<Integer, SimpleNode> nodes, int nodeId, int... neighborIds) {
+        SimpleNode node = nodes.get(nodeId);
         for (int neighborId : neighborIds) {
             node.withNeighbor(nodes.get(neighborId));
         }

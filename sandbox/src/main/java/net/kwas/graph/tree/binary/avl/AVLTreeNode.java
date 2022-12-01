@@ -18,7 +18,6 @@ public class AVLTreeNode extends BaseBinaryTreeNode<AVLTreeNode> {
         this.balance = balance;
     }
 
-
     @Override
     public String toString() {
         return "AVLTreeNode{" +

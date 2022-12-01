@@ -3,15 +3,15 @@ package net.kwas.graph;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GenericNode implements Node {
+public class SimpleNode implements Node {
     private final List<Node> neighbors = new ArrayList<>();
     private final int id;
 
-    public GenericNode(int id) {
+    public SimpleNode(int id) {
         this.id = id;
     }
 
-    public GenericNode withNeighbor(GenericNode node) {
+    public SimpleNode withNeighbor(SimpleNode node) {
         neighbors.add(node);
         return this;
     }

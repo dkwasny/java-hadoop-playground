@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Random;
 
 public class AVLTreeTest {
 
@@ -206,6 +207,18 @@ public class AVLTreeTest {
         List<Integer> expected = List.of(40, 20, 10, 30, 50, 45, 47, 60, 55, 70);
         List<Integer> actual = GraphTraversals.depthFirstTraversal(tree.getHead());
         Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void verifyRandomTreeIsBalanced() {
+        Random random = new Random(13);
+        AVLTree tree = new AVLTree();
+
+        for (int i = 0; i < 1000; i++) {
+            tree.addValue(random.nextInt(100000));
+        }
+
+        Assertions.assertTrue(tree.isBalanced());
     }
 
 }
