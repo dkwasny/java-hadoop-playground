@@ -8,7 +8,6 @@ public class AVLTree extends BaseBinaryTree<AVLTreeNode> {
 
     @Override
     public AVLTree addValue(int value) {
-
         if (!contains(value)) {
             if (getHead() == null) {
                 setHead(new AVLTreeNode(value));
@@ -60,7 +59,6 @@ public class AVLTree extends BaseBinaryTree<AVLTreeNode> {
             if (parent != null) {
                 boolean leftChild = parent.getLeftChild() == currNode;
 
-                // TODO Is this actually correct?
                 if (leftChild) {
                     parent.setBalance(parent.getBalance() - 1);
                 } else {
@@ -71,30 +69,22 @@ public class AVLTree extends BaseBinaryTree<AVLTreeNode> {
                     break;
                 }
                 else if (parent.getBalance() > 1) {
-                    if (currNode.getBalance() < 0) {
-                        retVal = doRotate(parent, currNode, this::rotateRightLeft);
-                        break;
-                    }
-                    else if (currNode.getBalance() > 0) {
+                    if (currNode.getBalance() >= 0) {
                         retVal = doRotate(parent, currNode, this::rotateLeft);
-                        break;
                     }
                     else {
-                        throw new RuntimeException("Invalid State");
+                        retVal = doRotate(parent, currNode, this::rotateRightLeft);
                     }
+                    break;
                 }
                 else if (parent.getBalance() < -1) {
-                    if (currNode.getBalance() < 0) {
+                    if (currNode.getBalance() <= 0) {
                         retVal = doRotate(parent, currNode, this::rotateRight);
-                        break;
-                    }
-                    else if (currNode.getBalance() > 0) {
-                        retVal = doRotate(parent, currNode, this::rotateLeftRight);
-                        break;
                     }
                     else {
-                        throw new RuntimeException("Invalid State");
+                        retVal = doRotate(parent, currNode, this::rotateLeftRight);
                     }
+                    break;
                 }
             }
             currNode = parent;
@@ -122,13 +112,14 @@ public class AVLTree extends BaseBinaryTree<AVLTreeNode> {
             }
         }
 
-        x.setBalance(0);
-        z.setBalance(0);
-
         return retVal;
     }
 
     private AVLTreeNode rotateLeft(AVLTreeNode x, AVLTreeNode z) {
+        return rotateLeft(x, z, true);
+    }
+
+    private AVLTreeNode rotateLeft(AVLTreeNode x, AVLTreeNode z, boolean updateBalance) {
         x.setRightChild(z.getLeftChild());
         z.setLeftChild(x);
 
@@ -137,10 +128,24 @@ public class AVLTree extends BaseBinaryTree<AVLTreeNode> {
         }
         z.setParent(x.getParent());
         x.setParent(z);
+
+        if (updateBalance) {
+            if (z.getBalance() != 0) {
+                x.setBalance(0);
+                z.setBalance(0);
+            } else {
+                x.setBalance(1);
+                z.setBalance(-1);
+            }
+        }
+
         return z;
     }
 
     private AVLTreeNode rotateRight(AVLTreeNode x, AVLTreeNode z) {
+        return rotateRight(x, z, true);
+    }
+    private AVLTreeNode rotateRight(AVLTreeNode x, AVLTreeNode z, boolean updateBalance) {
         x.setLeftChild(z.getRightChild());
         z.setRightChild(x);
 
@@ -149,18 +154,42 @@ public class AVLTree extends BaseBinaryTree<AVLTreeNode> {
         }
         z.setParent(x.getParent());
         x.setParent(z);
+
+        if (updateBalance) {
+            if (z.getBalance() != 0) {
+                x.setBalance(0);
+                z.setBalance(0);
+            } else {
+                x.setBalance(-1);
+                z.setBalance(1);
+            }
+        }
+
         return z;
     }
 
     private AVLTreeNode rotateLeftRight(AVLTreeNode x, AVLTreeNode z) {
         AVLTreeNode y = z.getRightChild();
 
-        y = rotateLeft(z, y);
+        y = rotateLeft(z, y, false);
         z.setParent(y);
         y.setParent(x);
 
-        y = rotateRight(x, y);
+        y = rotateRight(x, y, false);
         x.setParent(y);
+
+        if (y.getBalance() > 0) {
+            x.setBalance(1);
+            z.setBalance(0);
+        }
+        else if (y.getBalance() < 0) {
+            x.setBalance(0);
+            z.setBalance(-1);
+        }
+        else {
+            x.setBalance(0);
+            z.setBalance(0);
+        }
 
         return y;
     }
@@ -168,12 +197,25 @@ public class AVLTree extends BaseBinaryTree<AVLTreeNode> {
     private AVLTreeNode rotateRightLeft(AVLTreeNode x, AVLTreeNode z) {
         AVLTreeNode y = z.getLeftChild();
 
-        y = rotateRight(z, y);
+        y = rotateRight(z, y, false);
         z.setParent(y);
         y.setParent(x);
 
-        y = rotateLeft(x, y);
+        y = rotateLeft(x, y, false);
         x.setParent(y);
+
+        if (y.getBalance() > 0) {
+            x.setBalance(-1);
+            z.setBalance(0);
+        }
+        else if (y.getBalance() < 0) {
+            x.setBalance(0);
+            z.setBalance(1);
+        }
+        else {
+            x.setBalance(0);
+            z.setBalance(0);
+        }
 
         return y;
     }
