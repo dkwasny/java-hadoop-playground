@@ -9,8 +9,19 @@ public class BinaryTree {
         return head;
     }
 
+    public void setHead(BinaryTreeNode head) {
+        this.head = head;
+    }
+
     public int getSize() {
         return size;
+    }
+
+    public BinaryTree addValues(int... values) {
+        for (int value : values) {
+            addValue(value);
+        }
+        return this;
     }
 
     public BinaryTree addValue(int value) {
@@ -22,6 +33,23 @@ public class BinaryTree {
         }
         size++;
         return this;
+    }
+
+    public boolean contains(int value) {
+        boolean retVal = false;
+        BinaryTreeNode currNode = head;
+        while (!retVal && currNode != null) {
+            if (value == currNode.getId()) {
+                retVal = true;
+            }
+            else if (value < currNode.getId()) {
+                currNode = currNode.getLeftChild();
+            }
+            else {
+                currNode = currNode.getRightChild();
+            }
+        }
+        return retVal;
     }
 
     private BinaryTreeNode addChild(int value) {
