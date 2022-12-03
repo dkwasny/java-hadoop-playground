@@ -30,6 +30,16 @@ public class HeapHelper {
         this.shouldSiftUp = shouldSiftUp;
     }
 
+    public void heapify(int[] array) {
+        heapify(array, array.length);
+    }
+
+    public void heapify(int[] array, int size) {
+        for (int i = size - 1; i >= 0; i--) {
+            siftUp(i, array);
+        }
+    }
+
     public void siftUp(int index, int[] array) {
         int currIdx = index;
         while (currIdx > 0) {
