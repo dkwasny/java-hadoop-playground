@@ -74,7 +74,7 @@ public class SimpleTrieTest {
 
     @Test
     public void addWord_manyRandomWords() {
-        int numWords = 1000;
+        int numWords = 10000;
         Random random = new Random(13);
         List<String> words = new ArrayList<>();
         for (int i = 0; i < numWords; i++) {
@@ -96,10 +96,10 @@ public class SimpleTrieTest {
     }
 
     private String randomWord(Random random) {
-        int numChars = random.nextInt(1000) + 10;
+        int numChars = random.nextInt(100) + 10;
 
         int lowerBound = 'a';
-        int upperBound = 'z' - lowerBound;
+        int upperBound = 'z' - lowerBound + 1;
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < numChars; i++) {
