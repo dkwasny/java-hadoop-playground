@@ -36,7 +36,7 @@ public class HeapHelper {
 
     public void heapify(int[] array, int size) {
         for (int i = size - 1; i >= 0; i--) {
-            siftUp(i, array);
+            siftDown(i, array, size);
         }
     }
 
@@ -77,10 +77,10 @@ public class HeapHelper {
         int rightChildIndex = rightChildIndex(index);
 
         int retVal;
-        if (leftChildIndex > size && rightChildIndex > size) {
+        if (leftChildIndex >= size && rightChildIndex >= size) {
             retVal = -1;
         }
-        else if (rightChildIndex > size || shouldSiftUp.apply(array[leftChildIndex], array[rightChildIndex])) {
+        else if (rightChildIndex >= size || shouldSiftUp.apply(array[leftChildIndex], array[rightChildIndex])) {
             retVal = leftChildIndex;
         }
         else {
