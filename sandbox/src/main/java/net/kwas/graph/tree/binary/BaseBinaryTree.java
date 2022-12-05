@@ -57,6 +57,26 @@ public abstract class BaseBinaryTree<T extends BinaryTreeNode<T>> implements Bin
     }
 
     @Override
+    public List<Integer> preOrderTraversal() {
+        List<Integer> retVal = new ArrayList<>(getSize());
+
+        Deque<T> nodesToVisit = new ArrayDeque<>();
+        nodesToVisit.add(getHead());
+        while (!nodesToVisit.isEmpty()) {
+            T currNode = nodesToVisit.pollFirst();
+            retVal.add(currNode.getId());
+            if (currNode.getRightChild() != null) {
+                nodesToVisit.addFirst(currNode.getRightChild());
+            }
+            if (currNode.getLeftChild() != null) {
+                nodesToVisit.addFirst(currNode.getLeftChild());
+            }
+        }
+
+        return retVal;
+    }
+
+    @Override
     public List<Integer> inOrderTraversal() {
         List<Integer> retVal = new ArrayList<>(getSize());
 
@@ -81,6 +101,52 @@ public abstract class BaseBinaryTree<T extends BinaryTreeNode<T>> implements Bin
     }
 
     @Override
+    public List<Integer> postOrderTraversal() {
+        List<Integer> retVal = new ArrayList<>(getSize());
+
+        Deque<T> nodesToVisit = new ArrayDeque<>();
+        T currNode = getHead();
+        T prevNode = null;
+        while (!nodesToVisit.isEmpty() || currNode != null) {
+            while (currNode != null) {
+                nodesToVisit.addFirst(currNode);
+                currNode = currNode.getLeftChild();
+            }
+
+            currNode = nodesToVisit.peekFirst();
+
+            if (currNode != null) {
+                if (currNode.getRightChild() == null || currNode.getRightChild() == prevNode) {
+                    retVal.add(currNode.getId());
+                    nodesToVisit.pollFirst();
+                    prevNode = currNode;
+                    currNode = null;
+                }
+                else {
+                    currNode = currNode.getRightChild();
+                }
+            }
+        }
+
+        return retVal;
+    }
+
+    @Override
+    public List<Integer> preOrderTraversalRecursive() {
+        List<Integer> retVal = new ArrayList<>(getSize());
+        preOrderTraversalRecursive(getHead(), retVal);
+        return retVal;
+    }
+
+    private void preOrderTraversalRecursive(T node, List<Integer> values) {
+        if (node != null) {
+            values.add(node.getId());
+            preOrderTraversalRecursive(node.getLeftChild(), values);
+            preOrderTraversalRecursive(node.getRightChild(), values);
+        }
+    }
+
+    @Override
     public List<Integer> inOrderTraversalRecursive() {
         List<Integer> retVal = new ArrayList<>(getSize());
         inOrderTraversalRecursive(getHead(), retVal);
@@ -92,6 +158,21 @@ public abstract class BaseBinaryTree<T extends BinaryTreeNode<T>> implements Bin
             inOrderTraversalRecursive(node.getLeftChild(), values);
             values.add(node.getId());
             inOrderTraversalRecursive(node.getRightChild(), values);
+        }
+    }
+
+    @Override
+    public List<Integer> postOrderTraversalRecursive() {
+        List<Integer> retVal = new ArrayList<>(getSize());
+        postOrderTraversalRecursive(getHead(), retVal);
+        return retVal;
+    }
+
+    private void postOrderTraversalRecursive(T node, List<Integer> values) {
+        if (node != null) {
+            postOrderTraversalRecursive(node.getLeftChild(), values);
+            postOrderTraversalRecursive(node.getRightChild(), values);
+            values.add(node.getId());
         }
     }
 

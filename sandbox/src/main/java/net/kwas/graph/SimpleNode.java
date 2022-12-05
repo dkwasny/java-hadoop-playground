@@ -23,4 +23,11 @@ public class SimpleNode implements Node {
     public int getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "SimpleNode{" +
+            "id=" + id +
+            '}';
+    }
 }

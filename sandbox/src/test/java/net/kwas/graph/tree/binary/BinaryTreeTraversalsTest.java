@@ -126,4 +126,68 @@ public class BinaryTreeTraversalsTest {
         Assertions.assertEquals(expected, actual);
     }
 
+    @Test
+    public void preOrderTraversalRecursive_even() {
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValue(4)
+            .addValue(2)
+            .addValue(6)
+            .addValue(1)
+            .addValue(3)
+            .addValue(5)
+            .addValue(7);
+
+        List<Integer> expected = List.of(4, 2, 1, 3, 6, 5, 7);
+        List<Integer> actual = tree.preOrderTraversalRecursive();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void postOrderTraversalRecursive_even() {
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValue(4)
+            .addValue(2)
+            .addValue(6)
+            .addValue(1)
+            .addValue(3)
+            .addValue(5)
+            .addValue(7);
+
+        List<Integer> expected = List.of(1, 3, 2, 5, 7, 6, 4);
+        List<Integer> actual = tree.postOrderTraversalRecursive();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void preOrderTraversal_even() {
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValue(4)
+            .addValue(2)
+            .addValue(6)
+            .addValue(1)
+            .addValue(3)
+            .addValue(5)
+            .addValue(7);
+
+        List<Integer> expected = List.of(4, 2, 1, 3, 6, 5, 7);
+        List<Integer> actual = tree.preOrderTraversal();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void postOrderTraversal_even() {
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValue(4)
+            .addValue(2)
+            .addValue(6)
+            .addValue(1)
+            .addValue(3)
+            .addValue(5)
+            .addValue(7);
+
+        List<Integer> expected = List.of(1, 3, 2, 5, 7, 6, 4);
+        List<Integer> actual = tree.postOrderTraversal();
+        Assertions.assertEquals(expected, actual);
+    }
+
 }

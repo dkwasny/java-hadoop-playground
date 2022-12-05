@@ -18,9 +18,17 @@ public interface BinaryTree<T extends BinaryTreeNode<T>> {
 
     boolean contains(int value);
 
+    List<Integer> preOrderTraversal();
+
     List<Integer> inOrderTraversal();
 
+    List<Integer> postOrderTraversal();
+
+    List<Integer> preOrderTraversalRecursive();
+
     List<Integer> inOrderTraversalRecursive();
+
+    List<Integer> postOrderTraversalRecursive();
 
     void invert();
 
