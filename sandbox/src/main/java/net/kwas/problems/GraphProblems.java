@@ -1,8 +1,11 @@
 package net.kwas.problems;
 
 import net.kwas.graph.CycleDetector;
+import net.kwas.graph.GraphTraversals;
 import net.kwas.graph.Node;
 import net.kwas.graph.SimpleNode;
+import net.kwas.graph.tree.binary.BinaryTree;
+import net.kwas.graph.tree.binary.BinaryTreeNode;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -10,6 +13,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -82,6 +86,66 @@ public class GraphProblems {
         for (Map.Entry<Integer, Integer> dependency : dependencyList) {
             retVal.get(dependency.getKey()).withNeighbor(retVal.get(dependency.getValue()));
         }
+        return retVal;
+    }
+
+    public static <T extends BinaryTreeNode<T>> List<List<Integer>> printBinaryTreeArrayPermutations(BinaryTree<T> tree) {
+        LinkedList<List<Integer>> retVal = new LinkedList<>();
+        List<Integer> allIds = GraphTraversals.breadthFirstTraversal(tree.getHead());
+
+        Map<Integer, Integer> parentMap = getParentMap(tree);
+
+        // First node always wins!
+        int headId = tree.getHead().getId();
+        retVal.add(new ArrayList<>());
+        retVal.getFirst().add(headId);
+        allIds.remove(Integer.valueOf(headId));
+
+        for (int currLevel = 0; currLevel < allIds.size(); currLevel++) {
+            int numListsForLevel = retVal.size();
+            for (int i = 0; i < numListsForLevel; i++) {
+                List<Integer> currList = retVal.getFirst();
+                Set<Integer> potentialIds = new HashSet<>(allIds);
+                Set<Integer> addedIds = new HashSet<>(currList);
+                potentialIds.removeAll(addedIds);
+
+                for (Integer newId : potentialIds) {
+                    int parentId = parentMap.get(newId);
+                    if (addedIds.contains(parentId)) {
+                        List<Integer> newList = new ArrayList<>(currList);
+                        newList.add(newId);
+                        retVal.add(newList);
+                    }
+                }
+
+                // We're done with this list...move on
+                retVal.removeFirst();
+            }
+        }
+
+        return retVal;
+    }
+
+    private static <T extends BinaryTreeNode<T>> Map<Integer, Integer> getParentMap(BinaryTree<T> tree) {
+        Map<Integer, Integer> retVal = new HashMap<>();
+
+        Deque<T> nodesToVisit = new ArrayDeque<>();
+        nodesToVisit.add(tree.getHead());
+        while (!nodesToVisit.isEmpty()) {
+            T currNode = nodesToVisit.pollFirst();
+
+            T leftChild = currNode.getLeftChild();
+            if (leftChild != null) {
+                retVal.put(leftChild.getId(), currNode.getId());
+                nodesToVisit.addLast(leftChild);
+            }
+            T rightChild = currNode.getRightChild();
+            if (rightChild != null) {
+                retVal.put(rightChild.getId(), currNode.getId());
+                nodesToVisit.addLast(rightChild);
+            }
+        }
+
         return retVal;
     }
 

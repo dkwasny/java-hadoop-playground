@@ -1,4 +1,4 @@
-package net.kwas.array.sort;
+package net.kwas.array;
 
 import net.kwas.array.ArrayUtils;
 import net.kwas.array.heap.HeapHelper;

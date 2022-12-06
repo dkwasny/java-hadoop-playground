@@ -1,5 +1,6 @@
 package net.kwas.problems;
 
+import net.kwas.graph.tree.binary.simple.SimpleBinaryTree;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -85,6 +86,36 @@ public class GraphProblemsTest {
             )
         );
         Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void printBinaryTreeArrayPermutations() {
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValues(4, 2, 6, 1, 3, 5, 7);
+
+        List<List<Integer>> lists = GraphProblems.printBinaryTreeArrayPermutations(tree);
+        validatePermutations(lists, tree, 3);
+    }
+
+    @Test
+    public void printBinaryTreeArrayPermutations_bigTest() {
+        SimpleBinaryTree tree = new SimpleBinaryTree();
+        tree.addValues(50, 20, 60, 10, 25, 70, 5, 15, 65, 80);
+
+        List<List<Integer>> lists = GraphProblems.printBinaryTreeArrayPermutations(tree);
+        validatePermutations(lists, tree, 4);
+    }
+
+    private void validatePermutations(List<List<Integer>> lists, SimpleBinaryTree tree, int expectedHeight) {
+        for (List<Integer> list : lists) {
+            Assertions.assertEquals(tree.getSize(), list.size());
+            SimpleBinaryTree newTree = new SimpleBinaryTree();
+            for (Integer id : list) {
+                newTree.addValue(id);
+            }
+            int actualHeight = newTree.getHeight();
+            Assertions.assertEquals(expectedHeight, actualHeight);
+        }
     }
 
 }
